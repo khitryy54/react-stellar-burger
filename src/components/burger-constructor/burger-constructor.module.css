@@ -1,0 +1,50 @@
+.burgerConstructor {
+  width: 600px;
+}
+
+.burger {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  overflow-y: scroll;
+  max-height: 44vh;
+  overflow: auto;
+  scrollbar-gutter: stable;
+
+}
+
+.item {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 568px;
+}
+
+
+
+.total {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.total svg {
+  width: 36px;
+  height: 36px;
+}
+
+.order {
+  display: flex;
+  justify-content: end;
+
+}

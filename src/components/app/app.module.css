@@ -10,5 +10,5 @@
   display: flex;
   gap: 40px;
   justify-content: center;
-  align-items: flex-start;
+  /* align-items: flex-start; */
 }

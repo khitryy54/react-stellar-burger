@@ -7,13 +7,36 @@ import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import {ingredientPropType} from "../../utils/prop-types";
 import PropTypes from "prop-types";
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchIngredientsAsync } from './services/burger-ingredients.action';
+import { setIngredientModal } from '../ingredient-details/services/ingredient-details.action';
+import { useInView } from 'react-intersection-observer';
 
-function BurgerIngredients({ingredients}) {
-  
-  const [ingredientModal, setIngredientModal] = useState(null);
+function BurgerIngredients() {
+
+  const dispatch = useDispatch();
+  const ingredients = useSelector(store => store.burgerIngredients.ingredients);
+
+  const {ref:myRefBuns, inView: myBunsAreVisible} = useInView();
+  const {ref:myRefSauces, inView: mySaucesAreVisible} = useInView();
+  const {ref:myRefMains, inView: myMainsAreVisible} = useInView();
+
+  useEffect(() => {
+    myMainsAreVisible && setCurrent("three");
+    mySaucesAreVisible && setCurrent("two");
+    myBunsAreVisible && setCurrent("one");
+  }, [myBunsAreVisible, myMainsAreVisible, mySaucesAreVisible]);
+
+  useEffect(() => {
+    dispatch(fetchIngredientsAsync()); 
+  }, [dispatch]);
+
+
+  const ingredientModal = useSelector(store => store.ingredientDetails.ingredient);
   
   function closeIngredientModal() {
-    setIngredientModal(null);
+    dispatch(setIngredientModal(null));
   }
 
   const [current, setCurrent] = useState('one');
@@ -36,16 +59,16 @@ function BurgerIngredients({ingredients}) {
     </div>
     <div className={cn('custom-scroll', styles.container)}>
       <h2 className="text text_type_main-medium mb-6">Булки</h2>
-      <ul className={cn('pl-4', 'pr-1', styles.list)}>
-      {buns.map(bun => <li key={bun._id} onClick={() => setIngredientModal(bun)} className={styles.item}><BurgerIngredient ingredient={bun} /></li>)}
+      <ul ref={myRefBuns} className={cn('pl-4', 'pr-1', styles.list)}>
+      {buns.map(bun => <li key={bun._id} onClick={() => dispatch(setIngredientModal(bun))} className={styles.item}><BurgerIngredient ingredient={bun} /></li>)}
       </ul>
       <h2 className="text text_type_main-medium mt-10 mb-6">Соусы</h2>
-      <ul className={cn('pl-4', 'pr-1', styles.list)}>
-      {sauces.map(sauce => <li key={sauce._id} onClick={() => setIngredientModal(sauce)} className={styles.item}><BurgerIngredient  ingredient={sauce} /></li>)}
+      <ul ref={myRefSauces} className={cn('pl-4', 'pr-1', styles.list)}>
+      {sauces.map(sauce => <li key={sauce._id} onClick={() => dispatch(setIngredientModal(sauce))} className={styles.item}><BurgerIngredient  ingredient={sauce} /></li>)}
       </ul>
       <h2 className="text text_type_main-medium mt-10 mb-6">Начинки</h2>
-      <ul className={cn('pl-4', 'pr-1', styles.list)}>
-      {mains.map(main => <li key={main._id} onClick={() => setIngredientModal(main)} className={styles.item}><BurgerIngredient ingredient={main} /></li>)}
+      <ul ref={myRefMains} className={cn('pl-4', 'pr-1', styles.list)}>
+      {mains.map(main => <li key={main._id} onClick={() => dispatch(setIngredientModal(main))} className={styles.item}><BurgerIngredient ingredient={main} /></li>)}
       </ul>
     </div>
     {ingredientModal && (

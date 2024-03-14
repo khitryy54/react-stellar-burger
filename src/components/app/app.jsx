@@ -2,44 +2,23 @@ import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header.jsx";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
-import { useState, useEffect} from "react";
-
-const url = "https://norma.nomoreparties.space/api/ingredients";
+import React from "react";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 function App() {
-  const [ingredients, setIngredients] = useState([]);
 
-useEffect(() => {
-  const getIngredients = () => {
-    return fetch(url)
-      .then(checkResponse)
-  } 
-
-  const checkResponse = (res) =>  {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
-  }
-
-  getIngredients()
-    .then((data) => {
-      setIngredients(data.data);
-    })
-    .catch(console.error);
-}, []);
-  
- 
   return (
     <div className={styles.app}>
       <AppHeader />
       <main className={styles.main}>
-        <BurgerIngredients ingredients={ingredients}/>
-        <BurgerConstructor ingredients={ingredients}/>
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients/>
+          <BurgerConstructor/>
+        </DndProvider>
       </main>
     </div>
   );
-
 }
 
 export default App;

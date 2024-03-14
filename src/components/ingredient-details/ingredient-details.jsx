@@ -1,6 +1,7 @@
 import styles from './ingredient-details.module.css';
 import cn from 'classnames';
 import {ingredientPropType} from "../../utils/prop-types";
+import React from 'react';
 
 function IngredientDetails({ingredient}) {
   console.log(ingredient);

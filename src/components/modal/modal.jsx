@@ -1,24 +1,26 @@
 import { createPortal } from "react-dom";
-import { useState, useEffect} from "react";
+import {useEffect} from "react";
 import styles from './modal.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import cn from 'classnames';
 import PropTypes from "prop-types";
+import React from "react";
 
+const Esc = 27;
 const modalRoot = document.getElementById("react-modals");
 
 function Modal({title, onClose, children}) {
 
   useEffect(() => {
     const close = (e) => {
-      if(e.keyCode === 27){
+      if(e.keyCode === Esc){
         onClose();
       }
     }
     window.addEventListener('keydown', close)
   return () => window.removeEventListener('keydown', close)
-},[])
+})
 
 
   return createPortal(

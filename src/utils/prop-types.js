@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 
 export const ingredientPropType = PropTypes.shape({
   //укажите здесь prop-types для ингридиента
-  
   _id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
@@ -15,5 +14,7 @@ export const ingredientPropType = PropTypes.shape({
   image_mobile: PropTypes.string.isRequired,
   image_large: PropTypes.string.isRequired,
   __v: PropTypes.number.isRequired,
+  id: PropTypes.string,
+  counter: PropTypes.number
 });
 

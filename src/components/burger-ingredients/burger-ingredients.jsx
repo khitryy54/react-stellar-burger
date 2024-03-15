@@ -5,12 +5,10 @@ import cn from 'classnames';
 import BurgerIngredient from '../burger-ingredient/burger-ingredient';
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import {ingredientPropType} from "../../utils/prop-types";
-import PropTypes from "prop-types";
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchIngredientsAsync } from './services/burger-ingredients.action';
-import { setIngredientModal } from '../ingredient-details/services/ingredient-details.action';
+import { fetchIngredientsAsync } from '../../services/burger-ingredients/burger-ingredients.action';
+import { setIngredientModal } from '../../services/ingredient-details/ingredient-details.action';
 import { useInView } from 'react-intersection-observer';
 
 function BurgerIngredients() {
@@ -76,10 +74,6 @@ function BurgerIngredients() {
       )}
   </section>
   );
-}
-
-BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropType),
 }
 
 export default BurgerIngredients;

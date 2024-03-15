@@ -7,18 +7,25 @@ import OrderDetails from "../order-details/order-details";
 import BurgerConstructorElement from "../burger-constructor-element/burger-constructor-element";
 import React from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import { createOrderAsync, createOrderSuccess} from "../order-details/services/order-details.action";
+import { createOrderAsync, createOrderSuccess} from "../../services/order-details/order-details.action";
 import { useDrop } from "react-dnd";
-import { constructorAdd, constructorDelete } from "./services/burger-constructor.action";
-import { ingredientsAdd, ingredientsDelete} from "../burger-ingredients/services/burger-ingredients.action";
+import { constructorAdd, constructorDelete, constructorFree } from "../../services/burger-constructor/burger-constructor.action";
+import { fetchIngredientsAsync, ingredientsAdd, ingredientsDelete} from "../../services/burger-ingredients/burger-ingredients.action";
 
 
 function BurgerConstructor() {
 
   const dispatch = useDispatch();
+  const orderIsLoading = useSelector(store => store.orderDetails.isLoading);
   const orderNumber = useSelector(store => store.orderDetails.orderNumber);
   const ingredients = useSelector(store => store.burgerConstructor.ingredients);
   const bun = useSelector(store => store.burgerConstructor.bun);
+
+  function createOrder() {
+    dispatch(createOrderAsync([bun,...ingredients, bun]))
+      .then(dispatch(constructorFree()))
+      .then(dispatch(fetchIngredientsAsync()))
+    }
 
   function closeOrderModal() {
     dispatch(createOrderSuccess(null));
@@ -82,8 +89,9 @@ function BurgerConstructor() {
           <span className={cn("text text_type_digits-medium")}>{totalPrice}</span>
           <CurrencyIcon className={"pl-2 pr-10"} type="primary"/>
         </div>
-        <Button htmlType="button" type="primary" disabled = {!totalPrice} size="large" onClick={() => {dispatch(createOrderAsync([bun,...ingredients, bun]))}}>Оформить заказ</Button>
-         {orderNumber && <Modal title="" onClose={closeOrderModal}><OrderDetails orderNumber={orderNumber}></OrderDetails></Modal>}
+        <Button htmlType="button" type="primary" disabled = {!totalPrice || !bun} size="large" onClick={createOrder}>Оформить заказ</Button>
+        {orderIsLoading && <Modal title="Загрузка..." onClose={closeOrderModal}></Modal>}
+        {orderNumber && <Modal title="" onClose={closeOrderModal}><OrderDetails orderNumber={orderNumber}></OrderDetails></Modal>}
       </div>      
     </section>
   )

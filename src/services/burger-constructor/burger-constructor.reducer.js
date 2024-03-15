@@ -25,6 +25,8 @@ export const burgerConstructorReducer = (state = BURGER_CONSTRUCTOR_INITIAL_STAT
         console.log(updatedIngredients);
         return {...state, ingredients: updatedIngredients};
       }
+    case BURGER_CONSTRUCTOR_ACTION_TYPES.FREE:
+      return {bun: null, ingredients: []};
     default:
       return state;
   }

@@ -1,6 +1,6 @@
 import BURGER_CONSTRUCTOR_ACTION_TYPES from './burger-constructor.types';
 
-import { createAction } from '../../../utils/reducer.utils';
+import { createAction } from '../../utils/reducer.utils';
 
 export const constructorAdd = (ingredient) => {
   if (ingredient.type !== 'bun') {
@@ -17,4 +17,8 @@ export const constructorDelete = (toDelete) => {
 
 export const constructorReorder = (toFrom) => {
   return createAction(BURGER_CONSTRUCTOR_ACTION_TYPES.REORDER, toFrom)
+}
+
+export const constructorFree = () => {
+  return createAction(BURGER_CONSTRUCTOR_ACTION_TYPES.FREE)
 }

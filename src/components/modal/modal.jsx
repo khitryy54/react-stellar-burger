@@ -20,7 +20,7 @@ function Modal({title, onClose, children}) {
     }
     window.addEventListener('keydown', close)
   return () => window.removeEventListener('keydown', close)
-})
+}, [])
 
 
   return createPortal(
@@ -38,9 +38,9 @@ function Modal({title, onClose, children}) {
 }
 
 Modal.propTypes = {
-  title: PropTypes.string,
-  onClose: PropTypes.func,
-  children: PropTypes.element.isRequired
+  title: PropTypes.string.isRequired,
+  onClose: PropTypes.func.isRequired,
+  children: PropTypes.element
 }
 
 export default Modal;

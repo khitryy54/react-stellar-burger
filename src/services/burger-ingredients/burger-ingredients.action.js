@@ -1,7 +1,7 @@
 import BURGER_INGREDIENTS_ACTION_TYPES from './burger-ingredients.types';
 
-import { createAction } from '../../../utils/reducer.utils';
-import { getIngredients } from '../../../utils/api';
+import { createAction } from '../../utils/reducer.utils';
+import { getIngredients } from '../../utils/api';
 
 export const fetchIngredientsStart = () => 
   createAction(BURGER_INGREDIENTS_ACTION_TYPES.FETCH_INGREDIENTS_START);

@@ -2,10 +2,11 @@ import { DragIcon, ConstructorElement} from "@ya.praktikum/react-developer-burge
 import styles from "./burger-constructor-element.module.css";
 import cn from "classnames";
 import {ingredientPropType} from "../../utils/prop-types";
+import PropTypes from 'prop-types';
 import React, { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { useDispatch} from "react-redux";
-import { constructorReorder } from "../burger-constructor/services/burger-constructor.action";
+import { constructorReorder } from "../../services/burger-constructor/burger-constructor.action";
 
 
 function BurgerConstructorElement({ingredient, onDelete, index}) {
@@ -87,7 +88,9 @@ function BurgerConstructorElement({ingredient, onDelete, index}) {
 }
 
 BurgerConstructorElement.propTypes = {
-  ingredient:ingredientPropType.isRequired
+  ingredient:ingredientPropType.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired
 }
 
 export default BurgerConstructorElement;
